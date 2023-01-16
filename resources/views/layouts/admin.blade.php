@@ -9,7 +9,6 @@
         <meta content="Themesdesign" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset("panel/assets/images/favicon.ico")}}">
-        <script src="{{asset('panel/assets/libs/jquery/jquery.min.js')}}"></script>
         <script src="{{asset('panel/assets/libs/toastr/build/toastr.min.js')}}"></script>
         <!-- Bootstrap Css -->
         <link href="{{asset('panel/assets/libs/toastr/build/toastr.min.css')}}"  rel="stylesheet" type="text/css" />
@@ -64,10 +63,17 @@
                         </div>
                         <!-- end page title -->
                         <div>
-                            @if (session('status'))
+                            @if (session()->has('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <i class="mdi mdi-check-all me-2"></i>
                                 {{session('status')}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            @endif
+                            @if (session()->has('message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="mdi mdi-check-all me-2"></i>
+                                {{session('message')}}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             @endif
@@ -99,17 +105,20 @@
         <!-- END layout-wrapper -->
 
         <!-- JAVASCRIPT -->
+        <script src="{{asset('panel/assets/libs/jquery/jquery.min.js')}}"></script>
         <script src="{{asset('panel/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{asset('panel/assets/libs/metismenu/metisMenu.min.js')}}"></script>
         <script src="{{asset('panel/assets/libs/simplebar/simplebar.min.js')}}"></script>
         <script src="{{asset('panel/assets/libs/node-waves/waves.min.js')}}"></script>
+
 
         <script src="{{asset('panel/assets/js/app.js')}}"></script>
 
 
 
 
-@livewireScripts
+        @livewireScripts
+        @stack('script')
     </body>
 
 </html>

@@ -38,7 +38,7 @@ class CategoryController extends Controller
             $category->meta_title = $validatedData['meta_title'];
             $category->meta_keyword = $validatedData['meta_keyword'];
             $category->meta_description = $validatedData['meta_description'];
-            $category->status = $request->status == true ? '0' : '1';
+            $category->status = $request->status == true ? '1' : '0';
             $category->save();
             return redirect()->route('admin.categories')->with('status', 'Category add successfully');
 
@@ -56,20 +56,30 @@ class CategoryController extends Controller
         $category->slug= $validatedData['slug'];
         $category->description = $validatedData['description'];
 
-        $path = 'uploads/categories/' . $category->image;
-        if(File::exists($path)){
-            File::delete($path);
-        $file = $request->file('image');
-        $ext = $file->getClientOriginalExtension();
-        $filename = time() . '_.' . $ext;
-        $file->move('uploads/categories/', $filename);
-        $category->image = $filename;
+
+        if ($request->hasFile('image')) {
+            $path = 'uploads/categories/' . $category->image;
+            if(File::exists($path)){
+                File::delete($path);
+            }
+
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time() . '_.' . $ext;
+            $file->move('uploads/categories/', $filename);
+            $category->image = $filename;
+
+
         }
+
 
         $category->meta_title = $validatedData['meta_title'];
         $category->meta_keyword = $validatedData['meta_keyword'];
         $category->meta_description = $validatedData['meta_description'];
-        $category->status = $request->status == true ? '0' : '1';
+        $category->status = $request->status == true ? '1' : '0';
+
+        $category->update();
+        return redirect()->route('admin.categories')->with('status',"Category was updated successfully...");
     }
 
 }

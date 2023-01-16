@@ -47,7 +47,7 @@ Update {{$category->name}} Category
 
                             <div class=" col-md-12 mb-4">
                                 <label for="imgae">Image:</label>
-                                <input class="form-control  @error('image') is-invalid @enderror form-control-sm" id="image" value="{{$category->image}}" name="image" type="file">
+                                <input class="form-control  @error('image') is-invalid @enderror form-control-sm" id="image"  name="image" type="file">
                                 <small class="text-danger">
                                     @error('image')
                                      {{$message}}
